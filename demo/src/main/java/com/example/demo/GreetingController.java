@@ -2,6 +2,8 @@ package com.example.demo;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GreetingController {
 
+	private static final Logger logger = LogManager.getLogger(GreetingController.class);
+	
 	// final - constant
 	// static - class variable
 	private static final String template = "Hello, %s!";
@@ -35,6 +39,9 @@ public class GreetingController {
 
 	@GetMapping("/greeting")
 	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+		
+		logger.debug("[greeting()] Debug Message!");
+		
 		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
 
